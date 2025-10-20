@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Videoclub</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Registro de Usuario</h1>
+        <form id="register_form" action="register.php" method="POST">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required 
+                       pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]+" 
+                       title="Solo se permiten letras y espacios">
+                <small>Ejemplo: Juan</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="apellidos">Apellidos:</label>
+                <input type="text" id="apellidos" name="apellidos" required
+                       pattern="[A-Za-zÁÉÍÓÚáéíóúñÑ ]+" 
+                       title="Solo se permiten letras y espacios">
+                <small>Ejemplo: Pérez García</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="dni">DNI:</label>
+                <input type="text" id="dni" name="dni" required
+                       pattern="\d{8}-[A-Za-z]" 
+                       title="Formato: 12345678-Z">
+                <small>Ejemplo: 12345678-Z</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="telefono">Teléfono:</label>
+                <input type="tel" id="telefono" name="telefono" required
+                       pattern="\d{9}" 
+                       title="9 dígitos sin espacios">
+                <small>Ejemplo: 612345678</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="fecha_nacimiento">Fecha de Nacimiento:</label>
+                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" required
+                       pattern="\d{4}-\d{2}-\d{2}">
+                <small>Formato: AAAA-MM-DD</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required
+                       title="Formato de email válido">
+                <small>Ejemplo: usuario@ejemplo.com</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">Nombre de Usuario:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            
+            <button type="submit" id="register_submit">Registrarse</button>
+        </form>
+        <p>¿Ya tienes cuenta? <a href="login.html">Inicia sesión aquí</a></p>
+    </div>
+    <script src="js/validation.js"></script>
+</body>
+</html>

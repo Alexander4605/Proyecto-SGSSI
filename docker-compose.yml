@@ -1,35 +1,33 @@
+version: '3.8'
+
 services:
-   web:
-      image: web
-      environment:
-        - ALLOW_OVERRIDE=true
-      ports:
-        - "81:80"
-      links:
-        - db
-      volumes:
-        - ./app:/var/www/html/
+  web:
+    build: .
+    ports:
+      - "81:80"
+    volumes:
+      - ./html:/var/www/html
+    depends_on:
+      - db
+    networks:
+      - sgssi-network
 
-   db:
-     image: mariadb:10.8.2
-     restart: always
-     volumes:
-       - ./mysql:/var/lib/mysql
-     environment:
-       MYSQL_ROOT_PASSWORD: root
-       MYSQL_USER: admin
-       MYSQL_PASSWORD: test
-       MYSQL_DATABASE: database
-     ports:
-       - "8889:3306"
+  db:
+    image: mariadb:10.6
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: videoclub_db
+      MYSQL_USER: sgssi_user
+      MYSQL_PASSWORD: sgssi_password
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - sgssi-network
 
-   phpmyadmin:
-     image: phpmyadmin/phpmyadmin:latest
-     links:
-       - db
-     ports:
-       - 8890:80
-     environment:
-       MYSQL_USER: admin
-       MYSQL_PASSWORD: test
-       MYSQL_DATABASE: database
+volumes:
+  db_data:
+
+networks:
+  sgssi-network:
+    driver: bridge

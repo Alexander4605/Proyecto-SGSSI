@@ -1,13 +1,22 @@
-
-# Docker LAMP
-Linux + Apache + MariaDB (MySQL) + PHP 7.2 on Docker Compose. Mod_rewrite enabled by default.
-
 ## Instructions
+
+    #esto para clonar el el repo:
+```bash
+$ git clone -b git@github.com:Alexander4605/Proyecto-SGSSI.git
+```
+
+```bash
+$ cd Proyecto-SGSSI
+```
+
+
 
 Enter the following command to start your containers:
 ```bash
 $ docker-compose up -d
 ```
+# entramos a localhost:81
+
 
 To stop them, use this:
 ```bash

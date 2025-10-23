@@ -1,19 +1,40 @@
 
-# Docker LAMP
-Linux + Apache + MariaDB (MySQL) + PHP 7.2 on Docker Compose. Mod_rewrite enabled by default.
+# Proyecto 
+Integrantes:
+  Ivan Andres Dominguez
+  Alexander Perez Sanchez
+  Urko Mendez Espiga 
+  Adrian Ramirez Gomez
+  Miguel Garcia Gimenez
+  Jon Gete Muñoz
 
-## Instructions
+## Instrucciones 
 
-Enter the following command to start your containers:
+Requisistos previos:
+  Tener instalado git
+  Tener instalador Docker con Docker compose
+
+Primer paso:
+Clonar el repositorio
 ```bash
-$ docker-compose up -d
+$ git clone https://github.com/Alexander4605/Proyecto-SGSSI.git
 ```
-
-To stop them, use this:
+Segundo paso:
+Moverse al proyecto
 ```bash
-$ docker-compose stop
+$ cd Proyecto-SGSSI
 ```
-
-Feel free to make pull requests and help to improve this.
-
-If you are looking for phpMyAdmin, take a look at [this](https://github.com/celsocelante/docker-lamp/issues/2).
+Tercer paso:
+Cambiar de rama
+```bash
+$ git switch entrega_1
+```
+Cuarto paso:
+Iniciar el contenedor
+```bash
+$ sudo docker compose up -d 
+```
+Para parar el contenedor ekecutar lo siguiente:
+```bash
+$ sudo docker compose down 
+```

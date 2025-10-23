@@ -5,19 +5,30 @@ Integrantes:
    Ivan Andres Dominguez
    ```
    ```
-  -Alexander Perez Sanchez
+  Alexander Perez Sanchez
    ```
    ```
-  -Urko Mendez Espiga 
-  -Adrian Ramirez Gomez
-  -Miguel Garcia Gimenez
-  -Jon Gete Muñoz
+  Urko Mendez Espiga
+   ```
+   ```
+  Adrian Ramirez Gomez
+   ```
+   ```
+  Miguel Garcia Gimenez
+   ```
+   ```
+  Jon Gete Muñoz
+   ```
 
 ## Instrucciones 
 
 Requisistos previos:
+   ```
   Tener instalado git
+   ```
+   ```
   Tener instalador Docker con Docker compose
+   ```
 
 Primer paso:
 Clonar el repositorio

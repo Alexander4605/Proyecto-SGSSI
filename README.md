@@ -1,28 +1,60 @@
-## Instructions
 
-    #esto para clonar el el repo:
+# Proyecto 
+Integrantes:
+   ```
+   Ivan Andres Dominguez
+   ```
+   ```
+  Alexander Perez Sanchez
+   ```
+   ```
+  Urko Mendez Espiga
+   ```
+   ```
+  Adrian Ramirez Gomez
+   ```
+   ```
+  Miguel Garcia Gimenez
+   ```
+   ```
+  Jon Gete Muñoz
+   ```
+
+## Instrucciones 
+
+Requisistos previos:
+   ```
+  Tener instalado git
+   ```
+   ```
+  Tener instalador Docker con Docker compose
+   ```
+
+Primer paso:
+Clonar el repositorio
 ```bash
-$ git clone -b git@github.com:Alexander4605/Proyecto-SGSSI.git
+$ git clone https://github.com/Alexander4605/Proyecto-SGSSI.git
 ```
-
+Segundo paso:
+Moverse al proyecto
 ```bash
 $ cd Proyecto-SGSSI
 ```
-
-
-
-Enter the following command to start your containers:
+Tercer paso:
+Cambiar de rama
 ```bash
-$ docker-compose up -d
+$ git switch entrega_1
 ```
-# entramos a localhost:81
-
-
-To stop them, use this:
+Cuarto paso:
+Iniciar el contenedor
 ```bash
-$ docker-compose stop
+$ sudo docker compose up -d 
 ```
-
-Feel free to make pull requests and help to improve this.
-
-If you are looking for phpMyAdmin, take a look at [this](https://github.com/celsocelante/docker-lamp/issues/2).
+Otra manera es:
+```bash
+$ docker-compose up --build
+```
+Para parar el contenedor ejecutar lo siguiente:
+```bash
+$ sudo docker compose down 
+```

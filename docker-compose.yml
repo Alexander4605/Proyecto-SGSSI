@@ -1,33 +1,40 @@
+# Versión de Docker Compose a usar
 version: '3.8'
 
-services:
+# Lista de todos los contenedores (servicios)
+# Servicio 1: El servidor web (Apache/Nginx)
   web:
-    build: .
+    build: .                 # Construye la imagen desde el Dockerfile en esta carpeta
     ports:
-      - "81:80"
+      - "81:80"              # Mapea: Puerto 81 (tu PC) -> Puerto 80 (contenedor)
     volumes:
-      - ./html:/var/www/html
+      - ./html:/var/www/html # Sincroniza la carpeta local './html' con la del contenedor
     depends_on:
-      - db
+      - db                   # Arranca 'web' DESPUÉS de que arranque 'db'
     networks:
-      - sgssi-network
+      - sgssi-network        # Conecta este servicio a la red 'sgssi-network'
 
-  db:
-    image: mariadb:10.6
+  # Servicio 2: La base de datos (MariaDB)
+db:
+    image: mariadb:10.6      # Usa la imagen oficial de MariaDB 10.6
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: videoclub_db
-      MYSQL_USER: sgssi_user
-      MYSQL_PASSWORD: sgssi_password
+      MYSQL_ROOT_PASSWORD: rootpassword  # Contraseña root de la BBDD
+      MYSQL_DATABASE: videoclub_db       # Nombre de la BBDD a crear
+      MYSQL_USER: sgssi_user             # Usuario a crear
+      MYSQL_PASSWORD: sgssi_password     # Contraseña del usuario
     volumes:
+      # 'db_data' guarda los datos de la BBDD (para que no se borren)
       - db_data:/var/lib/mysql
+      # Ejecuta este script SQL la primera vez que arranca para crear tablas
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - sgssi-network
+      - sgssi-network        # Conecta también la BBDD a la misma red
 
+# Declara el volumen para guardar los datos de la BBDD
 volumes:
   db_data:
 
+# Declara la red personalizada para que 'web' y 'db' puedan comunicarse
 networks:
   sgssi-network:
-    driver: bridge
+    driver: bridge           # Tipo de red estándar

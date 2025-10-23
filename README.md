@@ -50,7 +50,7 @@ Iniciar el contenedor
 ```bash
 $ sudo docker compose up -d 
 ```
-Para parar el contenedor ekecutar lo siguiente:
+Para parar el contenedor ejecutar lo siguiente:
 ```bash
 $ sudo docker compose down 
 ```

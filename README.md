@@ -1,8 +1,13 @@
 
 # Proyecto 
 Integrantes:
-  -Ivan Andres Dominguez
+   ```
+   Ivan Andres Dominguez
+   ```
+   ```
   -Alexander Perez Sanchez
+   ```
+   ```
   -Urko Mendez Espiga 
   -Adrian Ramirez Gomez
   -Miguel Garcia Gimenez

@@ -1,12 +1,12 @@
 
 # Proyecto 
 Integrantes:
-  Ivan Andres Dominguez
-  Alexander Perez Sanchez
-  Urko Mendez Espiga 
-  Adrian Ramirez Gomez
-  Miguel Garcia Gimenez
-  Jon Gete Muñoz
+  -Ivan Andres Dominguez
+  -Alexander Perez Sanchez
+  -Urko Mendez Espiga 
+  -Adrian Ramirez Gomez
+  -Miguel Garcia Gimenez
+  -Jon Gete Muñoz
 
 ## Instrucciones 
 

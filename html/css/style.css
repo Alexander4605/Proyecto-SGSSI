@@ -1,77 +1,89 @@
+/* --- Reseteo Global --- */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    margin: 0; /* Quita márgenes exteriores */
+    padding: 0; /* Quita rellenos interiores */
+    box-sizing: border-box; /* El padding no aumenta el tamaño total */
 }
 
+/* --- Estilos Generales del Body --- */
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f4f4f4;
-    padding: 20px;
+    font-family: Arial, sans-serif; /* Tipo de letra principal */
+    line-height: 1.6; /* Altura de línea (espaciado) */
+    background-color: #f4f4f4; /* Color de fondo gris claro */
+    padding: 20px; /* Relleno alrededor del contenido */
 }
 
+/* --- Contenedor Principal --- */
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    max-width: 800px; /* Ancho máximo del contenedor */
+    margin: 0 auto; /* Centra el contenedor horizontalmente */
+    background: white; /* Fondo blanco */
+    padding: 20px; /* Relleno interno */
+    border-radius: 5px; /* Bordes redondeados */
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Sombra suave */
 }
 
+/* --- Título Principal --- */
 h1 {
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
+    color: #333; /* Color de texto oscuro */
+    margin-bottom: 20px; /* Margen inferior */
+    text-align: center; /* Texto centrado */
 }
 
+/* --- Grupos de Formulario --- */
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 15px; /* Espacio debajo de cada grupo */
 }
 
+/* --- Etiquetas (Labels) --- */
 label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+    display: block; /* Ocupa su propia línea */
+    margin-bottom: 5px; /* Espacio debajo de la etiqueta */
+    font-weight: bold; /* Texto en negrita */
 }
 
+/* --- Campos de Texto del Formulario --- */
 input[type="text"],
 input[type="password"],
 input[type="email"],
 input[type="tel"],
 input[type="date"] {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    width: 100%; /* Ocupa el 100% del ancho */
+    padding: 8px; /* Relleno interno */
+    border: 1px solid #ddd; /* Borde gris claro */
+    border-radius: 4px; /* Bordes redondeados */
 }
 
+/* --- Botón --- */
 button {
-    background: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
+    background: #007bff; /* Color de fondo azul */
+    color: white; /* Texto blanco */
+    padding: 10px 20px; /* Relleno (vertical y horizontal) */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Muestra una "mano" al pasar el ratón */
+    width: 100%; /* Ocupa todo el ancho */
 }
 
+/* --- Botón (Efecto Hover) --- */
 button:hover {
-    background: #0056b3;
+    background: #0056b3; /* Azul más oscuro al pasar el ratón */
 }
 
+/* --- Barra de Navegación --- */
 nav {
-    text-align: center;
-    margin-top: 20px;
+    text-align: center; /* Centra los enlaces */
+    margin-top: 20px; /* Espacio arriba de la navegación */
 }
 
+/* --- Enlaces de Navegación --- */
 nav a {
-    margin: 0 10px;
-    text-decoration: none;
-    color: #007bff;
+    margin: 0 10px; /* Espacio a los lados de cada enlace */
+    text-decoration: none; /* Quita el subrayado */
+    color: #007bff; /* Color azul */
 }
 
+/* --- Enlaces (Efecto Hover) --- */
 nav a:hover {
-    text-decoration: underline;
+    text-decoration: underline; /* Añade subrayado al pasar el ratón */
 }

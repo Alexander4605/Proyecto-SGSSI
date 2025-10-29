@@ -2,7 +2,7 @@
 // Inicia la sesión
 session_start();
 
-// Definimos la ruta raíz del proyecto (ej. /var/www/html)
+// Definimos la ruta raíz del proyecto 
 define('ROOT_PATH', __DIR__);
 
 // Conexión a la BBDD

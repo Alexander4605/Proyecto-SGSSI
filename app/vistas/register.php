@@ -25,7 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     } else {
         // Si hay un error de la BBDD (ej: email duplicado), mostrar un error genérico
-        // Esto podría pasar si alguien desactiva el JS e intenta registrar un email que ya existe
         $error_message = "Hubo un error al registrar el usuario. Es posible que el DNI o el email ya estén en uso.";
     }
 }

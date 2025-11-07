@@ -1,7 +1,5 @@
 <?php
-// Este archivo es incluido por index.php, por lo que ya tiene acceso a $conn y a la sesión.
 
-// Definimos el título de la página. La cabecera lo usará.
 $title = "Catálogo de Reviews - MovieReviews";
 
 // Incluimos la cabecera reutilizable

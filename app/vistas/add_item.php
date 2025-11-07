@@ -1,6 +1,5 @@
 <?php
 // Este archivo es incluido por index.php. La sesión y $conn ya están disponibles.
-// La comprobación de que el usuario ha iniciado sesión ya se hizo en index.php.
 
 $message = '';
 

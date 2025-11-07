@@ -2,7 +2,6 @@
     # --- INICIO CABECERAS DE SEGURIDAD PARA ESTÁTICOS ---
     #
     # Añade las cabeceras de seguridad a los archivos estáticos (css, js, etc.)
-    # Esto soluciona el error de CSP y X-Content-Type-Options en /assets/
     #
     
         Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; base-uri 'self';"
@@ -25,8 +24,3 @@
     RewriteRule . /index.php [L]
     # --- FIN FRONT CONTROLLER ---
 </IfModule>
-
-# --- INICIO BLOQUEAR LISTADO DE DIRECTORIOS ---
-# Esto es lo que probablemente esté causando tu 403 (¡es algo bueno!)
-Options -Indexes
-# --- FIN BLOQUEAR LISTADO DE DIRECTORIOS ---

@@ -1,20 +1,13 @@
 <?php
 // --- INICIO SOLUCIÓN COOKIES ---
 // 1. Configurar las cookies ANTES de iniciar la sesión
-//
-// --- MODIFICACIÓN: Se combinan los comandos ---
-// Se reemplaza session_set_cookie_params() y session_start()
-// por una sola llamada. Esto soluciona conflictos con
-// 'session.auto_start' en php.ini
+
 session_start([
     'cookie_lifetime' => 3600, // 1 hora
     'cookie_path' => '/',
     'cookie_domain' => '', // Dominio actual
     'cookie_secure' => false, // Poner a 'true' si usaras HTTPS
     'cookie_httponly' => true, // <-- SOLUCIÓN HttpOnly
-    // --- LÍNEA ELIMINADA ---
-    // Se elimina 'cookie_samesite' => 'Strict' porque tu versión de
-    // PHP (anterior a 7.3) no lo soporta y causa un warning que rompe todo.
 ]);
 
 // --- INICIO PARCHE SameSite PARA PHP < 7.3 ---
@@ -48,15 +41,8 @@ header("X-Frame-Options: DENY");
 // 5. Prevenir MIME-sniffing
 header("X-Content-Type-Options: nosniff");
 
-// 6. Quitar 'X-Powered-By'
-//
-// --- LÍNEA ELIMINADA ---
-// Se borra header_remove('X-Powered-By');
-// porque ahora se soluciona en el Dockerfile (con php.ini)
-//
-// --- LÍNEA ELIMINADA ---
 
-// 7. Política de Referrer (Buena práctica)
+// 6. Política de Referrer (Buena práctica)
 header("Referrer-Policy: strict-origin-when-cross-origin");
 
 // --- FIN SOLUCIÓN CABECERAS DE SEGURIDAD ---
@@ -92,16 +78,6 @@ if ($conn->connect_error) {
 $url_components = parse_url($_SERVER['REQUEST_URI']);
 $request_uri = $url_components['path'];
 
-
-// --- INICIO PARCHE SERVIDOR DE ESTÁTICOS ---
-//
-// ¡¡¡BLOQUE ELIMINADO!!!
-//
-// Ya no es necesario. El archivo .htaccess se encarga de servir 
-// los archivos estáticos (con las cabeceras correctas) o
-// de redirigir a index.php si no existen.
-//
-// --- FIN PARCHE SERVIDOR DE ESTÁTICOS ---
 
 
 // Decidimos qué página mostrar

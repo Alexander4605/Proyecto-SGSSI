@@ -13,9 +13,6 @@ services:
     volumes:
       - ./app:/var/www/html/ # Sincroniza la carpeta local './app' con la del contenedor
     
-    # ¡CAMBIO IMPORTANTE!
-    # "depends_on" ahora espera a que la BBDD esté "saludable",
-    # no solo "iniciada".
     depends_on:
       db: # Espera al servicio 'db'
         # Condición: Espera a que el 'healthcheck' de 'db' sea exitoso
@@ -39,9 +36,7 @@ services:
       # Mapea: Puerto 8889 (tu PC) -> 3306 (BBDD). Para conectar desde DBeaver, etc.
       - "8889:3306"
       
-    # ¡NUEVO BLOQUE AÑADIDO!
-    # Esta es la "prueba de salud". Docker ejecutará este comando
-    # hasta que funcione, lo que significa que la BBDD está lista.
+
     healthcheck:
       # Comando que se ejecuta para comprobar la salud
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "admin", "--password=test"]

@@ -1,6 +1,4 @@
 <?php
-// Este archivo es incluido por index.php, la sesión y la conexión $conn ya están disponibles.
-// La comprobación de que el usuario ha iniciado sesión ya se ha hecho en index.php.
 
 // 1. Validar que tenemos un ID de item en la URL
 if (!isset($_GET['item']) || !is_numeric($_GET['item'])) {

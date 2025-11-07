@@ -1,8 +1,4 @@
 <?php
-// Este archivo es incluido por index.php, por lo que ya tiene acceso a:
-// $conn (conexión a BBDD)
-// la sesión ($_SESSION)
-// la función verificar_csrf()
 
 // 1. Verificar que la petición sea POST
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -12,7 +8,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // 2. Verificar el Token CSRF
-// (La función ya está definida en index.php)
 verificar_csrf();
 
 // 3. Verificar que tengamos un ID

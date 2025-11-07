@@ -1,52 +1,175 @@
 <?php
+// --- INICIO SOLUCIÓN COOKIES ---
+// 1. Configurar las cookies ANTES de iniciar la sesión
+//
+// --- MODIFICACIÓN: Se combinan los comandos ---
+// Se reemplaza session_set_cookie_params() y session_start()
+// por una sola llamada. Esto soluciona conflictos con
+// 'session.auto_start' en php.ini
+session_start([
+    'cookie_lifetime' => 3600, // 1 hora
+    'cookie_path' => '/',
+    'cookie_domain' => '', // Dominio actual
+    'cookie_secure' => false, // Poner a 'true' si usaras HTTPS
+    'cookie_httponly' => true, // <-- SOLUCIÓN HttpOnly
+    // --- LÍNEA ELIMINADA ---
+    // Se elimina 'cookie_samesite' => 'Strict' porque tu versión de
+    // PHP (anterior a 7.3) no lo soporta y causa un warning que rompe todo.
+]);
 
-// Muestra un título en la página para confirmar que el PHP se está ejecutando.
-echo '<h1>Yeah, it works!<h1>';
+// --- INICIO PARCHE SameSite PARA PHP < 7.3 ---
+//
+// Buscamos la cabecera Set-Cookie que PHP acaba de enviar
+$cookie_header = null;
+foreach (headers_list() as $header) {
+    if (strpos($header, 'Set-Cookie: ' . session_name()) !== false) {
+        $cookie_header = $header;
+        break;
+    }
+}
 
-// --- Configuración de la Conexión a la Base de Datos ---
+// Si la encontramos, la borramos y la volvemos a añadir con SameSite
+if ($cookie_header) {
+    header_remove('Set-Cookie'); // Borra la original
+    header($cookie_header . '; SameSite=Strict'); // Añade la nueva
+}
+// --- FIN PARCHE SameSite PARA PHP < 7.3 ---
 
-// El 'hostname' es 'db'. Este es el nombre del servicio de MariaDB
-// definido en docker-compose.yml.
+
+// --- INICIO SOLUCIÓN CABECERAS DE SEGURIDAD ---
+// (Estas se aplican a todas las páginas generadas por PHP)
+
+// 3. Content Security Policy (CSP) - Versión Segura
+header("Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; base-uri 'self';");
+
+// 4. Anti-Clickjacking
+header("X-Frame-Options: DENY");
+
+// 5. Prevenir MIME-sniffing
+header("X-Content-Type-Options: nosniff");
+
+// 6. Quitar 'X-Powered-By'
+//
+// --- LÍNEA ELIMINADA ---
+// Se borra header_remove('X-Powered-By');
+// porque ahora se soluciona en el Dockerfile (con php.ini)
+//
+// --- LÍNEA ELIMINADA ---
+
+// 7. Política de Referrer (Buena práctica)
+header("Referrer-Policy: strict-origin-when-cross-origin");
+
+// --- FIN SOLUCIÓN CABECERAS DE SEGURIDAD ---
+
+/**
+ * Función para verificar el token CSRF y detener la ejecución si falla.
+ */
+function verificar_csrf() {
+    // Comprobar que el token exista en POST y en SESIÓN
+    if (!isset($_POST['csrf_token']) || 
+        !isset($_SESSION['csrf_token']) || 
+        !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        
+        // El token no es válido.
+        die("Error de validación de seguridad (CSRF). La petición ha sido bloqueada.");
+    }
+}
+
+// Definimos la ruta raíz del proyecto
+define('ROOT_PATH', __DIR__);
+
+// Conexión a la BBDD
 $hostname = "db";
-
-// Credenciales de acceso (usuario y contraseña)
 $username = "admin";
 $password = "test";
-
-// El nombre de la base de datos a la que nos queremos conectar
 $db = "database";
-
-// --- Conexión a la Base de Datos ---
-
-// Intenta establecer la conexión usando las variables definidas arriba
 $conn = mysqli_connect($hostname, $username, $password, $db);
-
-// Comprueba si la conexión falló
 if ($conn->connect_error) {
-  // Si falla, detiene la ejecución del script y muestra el error
-  die("Database connection failed: " . $conn->connect_error);
+    die("Database connection failed: " . $conn->connect_error);
 }
 
-// --- Consulta a la Base de Datos ---
+// Obtenemos la URL de forma robusta
+$url_components = parse_url($_SERVER['REQUEST_URI']);
+$request_uri = $url_components['path'];
 
-// Prepara y ejecuta una consulta SQL para seleccionar todos los datos de la tabla 'usuarios'
-$query = mysqli_query($conn, "SELECT * FROM usuarios")
-  // Si la consulta SQL falla (p.ej., la tabla no existe), detiene el script y muestra el error de MySQL
-  or die(mysqli_error($conn));
 
-// --- Muestra de Resultados ---
+// --- INICIO PARCHE SERVIDOR DE ESTÁTICOS ---
+//
+// ¡¡¡BLOQUE ELIMINADO!!!
+//
+// Ya no es necesario. El archivo .htaccess se encarga de servir 
+// los archivos estáticos (con las cabeceras correctas) o
+// de redirigir a index.php si no existen.
+//
+// --- FIN PARCHE SERVIDOR DE ESTÁTICOS ---
 
-// Inicia un bucle 'while' que recorre cada fila de resultados obtenida de la consulta
-while ($row = mysqli_fetch_array($query)) {
 
-  // Por cada fila, imprime en pantalla el 'id' y el 'nombre'
-  // envueltos en etiquetas de fila (<tr>) y celda (<td>) de una tabla HTML.
-  echo
-  "<tr>
-    <td>{$row['id']}</td>
-    <td>{$row['nombre']}</td>
-   </tr>";
+// Decidimos qué página mostrar
+switch ($request_uri) {
+    case '/':
+    case '/items':
+        // Página de inicio / listado de reviews
+        include ROOT_PATH . '/vistas/items_list.php';
+        break;
+
+    case '/register':
+        // Muestra el formulario de registro
+        include ROOT_PATH . '/vistas/register.php';
+        break;
+
+    case '/login':
+        // Muestra el formulario de login
+        include ROOT_PATH . '/vistas/login.php';
+        break;
+        
+    case '/logout':
+        // Cierra la sesión del usuario
+        session_destroy();
+        header('Location: /'); // Redirige a la página principal
+        exit();
+        break;
+
+    case '/add_item':
+        // Muestra el formulario para añadir una review
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit();
+        }
+        include ROOT_PATH . '/vistas/add_item.php';
+        break;
+        
+    case '/modify_user':
+        // Lógica para modificar los datos del usuario
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit();
+        }
+        include ROOT_PATH . '/vistas/modify_user.php';
+        break;
+        
+    case '/modify_item':
+        // Lógica para modificar una review
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit();
+        }
+        include ROOT_PATH . '/vistas/modify_item.php';
+        break;
+
+    case '/delete_item':
+        // Lógica para eliminar una review
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit();
+        }
+        include ROOT_PATH . '/vistas/delete_item.php';
+        break;
+
+    default:
+        // Página no encontrada
+        // El .htaccess redirigirá aquí si el archivo no existe
+        http_response_code(404);
+        include ROOT_PATH . '/vistas/404.php';
+        break;
 }
-
-// Cierra el bloque de código PHP
 ?>

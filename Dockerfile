@@ -1,17 +1,16 @@
-# Usar una imagen base de PHP con Apache
-FROM php:8.1-apache
-
-# Instalar extensiones de PHP necesarias para MariaDB
-RUN docker-php-ext-install mysqli pdo pdo_mysql
-
-# Habilitar mod_rewrite para URLs amigables (por si acaso)
+FROM php:7.2.2-apache
+RUN docker-php-ext-install mysqli
 RUN a2enmod rewrite
+RUN a2enmod headers
 
-# Copiar los archivos de la aplicación al contenedor
-COPY html/ /var/www/html/
+# --- Configuración de Seguridad de Apache (Oculta ServerTokens) ---
+RUN echo "\n# --- Configuración de Seguridad Personalizada ---" >> /etc/apache2/apache2.conf && \
+    echo "ServerTokens Prod" >> /etc/apache2/apache2.conf && \
+    echo "ServerSignature Off" >> /etc/apache2/apache2.conf
 
-# Cambiar los permisos del directorio
-RUN chown -R www-data:www-data /var/www/html
+# --- Configuración de Seguridad de PHP (Oculta X-Powered-By) ---
+RUN echo "expose_php = Off" > /usr/local/etc/php/conf.d/zz-security.ini
 
-# Exponer el puerto 80
-EXPOSE 80
+
+RUN sed -i '/<Directory \/var\/www\/html>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+

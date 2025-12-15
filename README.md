@@ -20,7 +20,7 @@ Integrantes:
   Jon Gete Muñoz
    ```
 
-## Instrucciones 
+## Instrucciones :
 
 Requisistos previos:
    ```

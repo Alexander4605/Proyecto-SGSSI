@@ -2,6 +2,7 @@
 version: '3.8'
 
 # Lista de todos los contenedores (servicios)
+services:
 # Servicio 1: El servidor web (Apache/Nginx)
   web:
     build: .                 # Construye la imagen desde el Dockerfile en esta carpeta
